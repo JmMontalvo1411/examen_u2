@@ -22,8 +22,8 @@ class AlumnoController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:255',
             'curso' => 'required|string|max:255',
-            'nota1' => 'required|numeric|min:0|max:10',
-            'nota2' => 'required|numeric|min:0|max:10',
+            'nota1' => 'required|numeric|min:0|max:20',
+            'nota2' => 'required|numeric|min:0|max:20',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.string' => 'El campo nombre debe ser una cadena de texto.',
@@ -34,11 +34,11 @@ class AlumnoController extends Controller
             'nota1.required' => 'El campo nota 1 es obligatorio.',
             'nota1.numeric' => 'El campo nota 1 debe ser un número.',
             'nota1.min' => 'El campo nota 1 debe ser al menos 0.',
-            'nota1.max' => 'El campo nota 1 no puede ser mayor que 10.',
+            'nota1.max' => 'El campo nota 1 no puede ser mayor que 20.',
             'nota2.required' => 'El campo nota 2 es obligatorio.',
             'nota2.numeric' => 'El campo nota 2 debe ser un número.',
             'nota2.min' => 'El campo nota 2 debe ser al menos 0.',
-            'nota2.max' => 'El campo nota 2 no puede ser mayor que 10.',
+            'nota2.max' => 'El campo nota 2 no puede ser mayor que 20.',
         ]);
 
         Alumno::create($request->all());
