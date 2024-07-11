@@ -1,7 +1,7 @@
 <?php
+
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlumnoController;
 
-Route::get('/', [AlumnoController::class, 'index'])->name('alumnos.index');
-Route::get('/create', [AlumnoController::class, 'create'])->name('alumnos.create');
-Route::post('/', [AlumnoController::class, 'store'])->name('alumnos.store');
-Route::get('/{alumno}', [AlumnoController::class, 'show'])->name('alumnos.show');
+Route::get('/', [AlumnoController::class, 'home'])->name('home');
+Route::resource('alumnos', AlumnoController::class);

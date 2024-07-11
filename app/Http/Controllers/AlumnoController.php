@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Models\Alumno;
 use Illuminate\Http\Request;
+use App\Models\Alumno;
 
 class AlumnoController extends Controller
 {
@@ -19,34 +20,40 @@ class AlumnoController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'curso' => 'required|string|max:255',
+        $validatedData = $request->validate([
+            'nombre' => 'required|max:255',
+            'curso' => 'required|max:255',
             'nota1' => 'required|numeric|min:0|max:20',
             'nota2' => 'required|numeric|min:0|max:20',
         ], [
-            'nombre.required' => 'El campo nombre es obligatorio.',
-            'nombre.string' => 'El campo nombre debe ser una cadena de texto.',
-            'nombre.max' => 'El campo nombre no puede tener más de 255 caracteres.',
-            'curso.required' => 'El campo curso es obligatorio.',
-            'curso.string' => 'El campo curso debe ser una cadena de texto.',
-            'curso.max' => 'El campo curso no puede tener más de 255 caracteres.',
-            'nota1.required' => 'El campo nota 1 es obligatorio.',
-            'nota1.numeric' => 'El campo nota 1 debe ser un número.',
-            'nota1.min' => 'El campo nota 1 debe ser al menos 0.',
-            'nota1.max' => 'El campo nota 1 no puede ser mayor que 20.',
-            'nota2.required' => 'El campo nota 2 es obligatorio.',
-            'nota2.numeric' => 'El campo nota 2 debe ser un número.',
-            'nota2.min' => 'El campo nota 2 debe ser al menos 0.',
-            'nota2.max' => 'El campo nota 2 no puede ser mayor que 20.',
+            'nombre.required' => 'El nombre es obligatorio.',
+            'nombre.max' => 'El nombre no puede tener más de 255 caracteres.',
+            'curso.required' => 'El curso es obligatorio.',
+            'curso.max' => 'El curso no puede tener más de 255 caracteres.',
+            'nota1.required' => 'La nota 1 es obligatoria.',
+            'nota1.numeric' => 'La nota 1 debe ser un número.',
+            'nota1.min' => 'La nota 1 debe ser al menos 0.',
+            'nota1.max' => 'La nota 1 no puede ser mayor a 20.',
+            'nota2.required' => 'La nota 2 es obligatoria.',
+            'nota2.numeric' => 'La nota 2 debe ser un número.',
+            'nota2.min' => 'La nota 2 debe ser al menos 0.',
+            'nota2.max' => 'La nota 2 no puede ser mayor a 20.',
         ]);
 
-        Alumno::create($request->all());
-        return redirect()->route('alumnos.index');
+        Alumno::create($validatedData);
+
+        return redirect()->route('alumnos.index')->with('success', 'Alumno creado exitosamente.');
     }
 
-    public function show(Alumno $alumno)
+    public function show($id)
     {
+        $alumno = Alumno::findOrFail($id);
         return view('alumnos.show', compact('alumno'));
+    }
+
+    public function home()
+    {
+        $totalAlumnos = Alumno::count();
+        return view('home', compact('totalAlumnos'));
     }
 }
